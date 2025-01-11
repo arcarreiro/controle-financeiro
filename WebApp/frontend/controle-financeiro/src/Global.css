@@ -1,0 +1,23 @@
+/* Reset CSS */
+*,
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+/* Global style  */
+body {
+    background-color: var(--background-color);
+    font-family: 'Source Sans 3', sans-serif !important;
+    font-size: 100%;
+    list-style-type: none;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+}
