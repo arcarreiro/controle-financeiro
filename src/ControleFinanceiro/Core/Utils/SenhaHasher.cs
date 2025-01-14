@@ -1,9 +1,11 @@
-﻿namespace ControleFinanceiro.Core.Utils;
+﻿using System.Security.Cryptography;
+
+namespace ControleFinanceiro.Core.Utils;
 
 
 public class SenhaHasher
 {
-    public static string HashPassword(string senha)
+        public static string HashPassword(string senha)
     {
         return BCrypt.Net.BCrypt.HashPassword(senha);
     }
@@ -11,6 +13,7 @@ public class SenhaHasher
     public static bool VerifyPassword(string senha, string hashedSenha)
     {
         return BCrypt.Net.BCrypt.Verify(senha, hashedSenha);
-    }
+    
+}
 }
 

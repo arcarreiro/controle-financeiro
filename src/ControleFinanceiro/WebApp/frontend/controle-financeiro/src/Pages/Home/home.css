@@ -1,0 +1,34 @@
+.global {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.revenue {
+    height: 97vh;
+    width: 48.75%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.expenses {
+    height: 100%;
+    width: 48.75%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.monthTotal {
+    width: 100%;
+    height: 12rem;
+    margin-bottom: 1rem;
+}
+.revenueHistory {
+    width: 100%;
+    height: 40rem;
+}

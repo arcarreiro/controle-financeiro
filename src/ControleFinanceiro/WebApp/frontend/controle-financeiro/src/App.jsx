@@ -11,10 +11,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import "./Global.css";
-import PageContainer from './Components/PageContainer';
-import Login from './Pages/Login';
 import { AuthProvider } from './Context/AuthContext';
 import Routes from './Routes/Routes';
+import ToastifyAlert from './Components/ToastifyAlert';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,6 +21,7 @@ function App() {
   return (
     <>
     <AuthProvider>
+      <ToastifyAlert/>
      <ThemeContextProvider>
       <Routes/>
      </ThemeContextProvider>

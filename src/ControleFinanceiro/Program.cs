@@ -4,6 +4,8 @@ using ControleFinanceiro.Core.Utils;
 using ControleFinanceiro.Core.ValueObjects;
 using ControleFinanceiro.Infrastructure.Configurations;
 using ControleFinanceiro.Infrastructure.Data;
+using ControleFinanceiro.Infrastructure.Mappings;
+using Dapper.FluentMap;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -89,6 +91,19 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 Dapper.SqlMapper.AddTypeHandler(new EmailTypeHandler());
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+});
+
+FluentMapper.Initialize(config =>
+{
+    config.AddMap(new UsuarioMap());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -100,8 +115,9 @@ if (app.Environment.IsDevelopment())
     app.UseAuthorization();
 }
 
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
-
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

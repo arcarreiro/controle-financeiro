@@ -41,10 +41,6 @@ hr {
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  :hover {
-        cursor: pointer;
-        background-color: var(--cinza-secundario);
-      }
 }
 
 .sidebar-nav-item {
@@ -56,11 +52,31 @@ hr {
   align-items: center;
   svg {
         font-size: 24px;
-        &:hover {
-          cursor: pointer;
-        }
       }
-      
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--cinza-secundario);
+      }
+}
+
+.logout {
+  color: var(--cinza-terciario);
+  padding-right: 1rem;
+  height: 3.2rem;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  align-items: center;
+  svg {
+        font-size: 24px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: var(--cinza-secundario);
+      }
 }
 
 .profile {

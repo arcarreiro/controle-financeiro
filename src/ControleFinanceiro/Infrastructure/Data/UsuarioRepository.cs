@@ -78,6 +78,7 @@ namespace ControleFinanceiro.Infrastructure.Data
             using var connection = _databaseConfig.GetConnection();
             
             var usuario = await connection.QueryFirstOrDefaultAsync<Usuario>(query, new { Email = email });
+            Console.WriteLine("Usuario recuperado do banco: " + usuario.Email + " hash: " + usuario.SenhaHash);
             return usuario;
             
         }

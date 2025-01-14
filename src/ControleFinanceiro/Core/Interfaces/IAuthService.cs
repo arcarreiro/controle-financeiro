@@ -1,8 +1,10 @@
-﻿namespace ControleFinanceiro.Core.Interfaces
+﻿using ControleFinanceiro.Application.DTOs;
+
+namespace ControleFinanceiro.Core.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> GenerateToken(string email);
+        Task<AuthResultDTO> GenerateToken(string email);
         Task<bool> ValidateUserCredentials(string email, string senha);
     }
 }

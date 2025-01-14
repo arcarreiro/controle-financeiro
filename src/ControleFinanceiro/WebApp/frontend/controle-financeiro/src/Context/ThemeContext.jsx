@@ -39,6 +39,10 @@ export function ThemeContextProvider({ children }) {
                 "--card-header-color",
                 "var(--header-card)"
             );
+            document.documentElement.style.setProperty(
+                "--button-color",
+                "var(--verde-primario)"
+            );
         } else {
             document.documentElement.style.setProperty(
                 "--font-color",
@@ -50,7 +54,7 @@ export function ThemeContextProvider({ children }) {
             );
             document.documentElement.style.setProperty(
                 "--background-color",
-                "var(--fundo)"
+                "var(--fundo-contraste)"
             );
             document.documentElement.style.setProperty(
                 "--icon-color",
@@ -59,6 +63,10 @@ export function ThemeContextProvider({ children }) {
             document.documentElement.style.setProperty(
                 "--card-header-color",
                 "var(--header-card-constraste)"
+            );
+            document.documentElement.style.setProperty(
+                "--button-color",
+                "var(--preto-primario)"
             );
         }
     }, [darkThemeIsActive]);

@@ -7,6 +7,7 @@ using System.Text;
 using ControleFinanceiro.Infrastructure.Configurations;
 using ControleFinanceiro.Core.Interfaces;
 using ControleFinanceiro.Core.Utils;
+using ControleFinanceiro.Application.DTOs;
 
 public class AuthService : IAuthService
 {
@@ -19,7 +20,7 @@ public class AuthService : IAuthService
         _usuarioRepository = usuarioRepository;
     }
 
-    public async Task<string> GenerateToken(string email)
+    public async Task<AuthResultDTO> GenerateToken(string email)
     {
         var usuario = await _usuarioRepository.GetByEmail(email);
         if (usuario == null)
@@ -46,7 +47,16 @@ public class AuthService : IAuthService
             signingCredentials: creds
         );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+        
+        return new AuthResultDTO
+        {
+            Token = tokenString,
+            UsuarioId = usuario.Id,
+            Nome = usuario.Nome,
+            Email = usuario.Email.Endereco
+        };
+
     }
 
     public async Task<bool> ValidateUserCredentials(string email, string senha)

@@ -27,7 +27,7 @@ export function Sidebar() {
                 <Col className="column-container">
                     <div className="buttons-profile-separator">
                         <div className="logo-area">
-                            <img src="../../../public/logo.png" alt="Logotipo My Wallet" className="banner-image" />
+                            <img src="/logo.png" alt="Logotipo My Wallet" className="banner-image" />
                         </div>
                         <hr />
                         <div className="sidebar-logout-separator">
@@ -60,7 +60,7 @@ export function Sidebar() {
                                     <span>Metas</span>
                                 </div>
                             </div>
-                            <div className="sidebar-nav-item">
+                            <div className="logout">
                                 <BiLogOut />
                                 <span>Logout</span>
                             </div>
