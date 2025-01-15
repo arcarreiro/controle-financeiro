@@ -1,5 +1,6 @@
 ﻿using ControleFinanceiro.Application.DTOs;
 using ControleFinanceiro.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleFinanceiro.API.Controllers
@@ -29,6 +30,7 @@ namespace ControleFinanceiro.API.Controllers
         }
 
         [HttpGet("mes/{ano}/{mes}/usuario/{usuarioId}")]
+        [Authorize]
         public async Task<IActionResult> GetReceitasByMonth(int ano, int mes, int usuarioId)
         {
             var receitas = await _receitaService.GetReceitasByMonthAsync(ano, mes, usuarioId);
