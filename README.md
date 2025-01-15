@@ -62,27 +62,6 @@ Este projeto foi desenvolvido por **Arthur Carreiro** como parte do processo sel
 6. **Acessar a aplicação:**
    Abra o navegador e acesse `http://localhost:3000`
 
----
-
-## 📦 Estrutura do Projeto
-
-```plaintext
-📦 Projeto T2M
-├── backend
-│   ├── Controllers
-│   ├── Models
-│   ├── Repositories
-│   └── Tests
-│
-├── frontend
-│   ├── src
-│   │   ├── components
-│   │   ├── pages
-│   │   └── services
-│   └── public
-│
-└── README.md
-```
 
 ---
 
