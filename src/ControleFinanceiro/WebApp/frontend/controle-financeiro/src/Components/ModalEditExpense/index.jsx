@@ -9,48 +9,65 @@ import "./style.css"
 import { ptBR } from "date-fns/locale";
 import { DateContext } from "../../Context/DateContext";
 
-function ModalEditRevenue({ handleClose, show, id }) {
+function ModalEditExpense({ handleClose, show, id }) {
 
     const [description, setDescription] = useState(null);
     const [amount, setAmount] = useState(null);
     const [date, setDate] = useState(null);
-    const [source, setSource] = useState(null);
+    const [type, setType] = useState(null);
     const { load, setLoad } = useContext(DateContext)
 
 
     const handleAdd = async () => {
 
-        const receitaData = {
+        const despesaData = {
             descricao : description,
             valor : amount,
             data: date,
-            fonte: source
+            tipo: type
         };
     
         const cleanData = Object.fromEntries(
-            Object.entries(receitaData).filter(([_, value]) => value != null)
+            Object.entries(despesaData).filter(([_, value]) => value != null)
         );
 
         const token = localStorage.getItem('token')
         
         try {
 
-            const response = await api.put(`/receitas/${id}`, cleanData,
+            const response = await api.put(`/despesas/${id}`, cleanData,
             {
                 headers: {
                 "Authorization": `Bearer ${token}`
                 }
             });
             
-            toast.success("Receita alterada com sucesso!")
+            toast.success("Despesa alterada com sucesso!")
             setLoad(!load)
             handleClose();
             setAmount(null)
             setDate(null)
             setDescription(null)
-            setSource(null)
+            setType(null)
         } catch (e) {
-            toast.error("Não foi possível alterar a receita, tente novamente mais tarde.")
+            toast.error("Não foi possível alterar a despesa, tente novamente mais tarde.")
+        }
+    }
+
+    const handleSelectChange = (event) => {
+        switch (event) {
+            case "Habitação":
+                setType("Habitacao");
+            case "Serviços Essenciais":
+                setType("ServicosEssenciais");
+            case "Transporte":
+                setType("Transporte");
+            case "Entretenimento":
+                setType("Entretenimento");
+            case "Compras":
+                setType("Compras");
+            default:
+                setType("Outros");
         }
     }
 
@@ -72,12 +89,18 @@ function ModalEditRevenue({ handleClose, show, id }) {
                     />
                 </InputGroup>
                 <InputGroup className="mb-3">
-                    <Form.Control
-                        type={"text"}
-                        placeholder="Fonte"
-                        onChange={(e) => { setSource(e.target.value) }}
-                        defaultValue={source}
-                    />
+                    <Form.Select
+                        placeholder="Tipo de despesa"
+                        onChange={handleSelectChange}
+                        defaultValue={type}
+                    >
+                        <option>Habitação</option>
+                        <option>Serviços Essenciais</option>
+                        <option>Transporte</option>
+                        <option>Entretenimento</option>
+                        <option>Compras</option>
+                        <option>Outros</option>
+                    </Form.Select>
                 </InputGroup>
                 <InputGroup className="mb-3">
                     <Form.Control
@@ -98,4 +121,4 @@ function ModalEditRevenue({ handleClose, show, id }) {
     );
 }
 
-export default ModalEditRevenue;
+export default ModalEditExpense;

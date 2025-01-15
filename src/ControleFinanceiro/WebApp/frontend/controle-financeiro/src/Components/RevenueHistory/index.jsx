@@ -71,7 +71,7 @@ export default function RevenueHistory() {
                 )
             })}
             <ModalDeleteRevenue handleClose={handleClose} id={modalIndex} show={showDelete}/>
-            <ModalEditRevenue revenue={modalItem} handleClose={handleClose} show={showEdit} />
+            <ModalEditRevenue id={modalItem} handleClose={handleClose} show={showEdit} />
         </div>
     </>);
 }
