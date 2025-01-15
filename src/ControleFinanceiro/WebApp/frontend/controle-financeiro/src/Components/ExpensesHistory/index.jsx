@@ -54,11 +54,12 @@ export default function ExpensesHistory() {
         <div className="globalExpensesHistory">
             {despesas.map((item, index) => {
                 return (<div style={{ width: "100%", height: "4rem" }} key={index}>
-                    <ExpenseItem data={item.data} valor={item.valor} descricao={item.descricao} tipo={item.tipo} idUsuario={item.id} />
+                    <ExpenseItem data={item.data} valor={item.valor} descricao={item.descricao} tipo={item.tipo} 
+                    handleShowDelete={() =>{handleShowDelete(item.id)}} handleShowEdit={handleShowEdit}/>
                 </div>
                 )
             })}
-            <ModalDeleteExpense handleClose={handleClose} show={showDelete} id={modalIndex}/>
+            <ModalDeleteExpense handleClose={handleClose} id={modalIndex} show={showDelete}/>
         </div>
     </>);
 }

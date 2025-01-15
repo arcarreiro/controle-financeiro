@@ -101,10 +101,6 @@ export function Sidebar() {
                                     <LiaFileInvoiceDollarSolid />
                                     <span>Adicionar Despesa</span>
                                 </div>
-                                <div className="sidebar-nav-item">
-                                    <PiTargetBold />
-                                    <span>Definir Meta de Gastos</span>
-                                </div>
                             </div>
                             {isAuthenticated &&
                                 <div className="logout" role="button" onClick={handleShow}>

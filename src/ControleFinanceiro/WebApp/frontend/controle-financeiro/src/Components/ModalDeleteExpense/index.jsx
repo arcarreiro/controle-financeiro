@@ -2,13 +2,16 @@ import React, { useContext } from "react"
 import ButtonComponent from "../ButtonComponent";
 import { Modal } from "react-bootstrap";
 import { DateContext } from "../../Context/DateContext";
+import { api } from "../../api/api";
 
 function ModalDeleteExpense({handleClose, show, id}) {
 
     const { load, setLoad } = useContext(DateContext)
+    
 
     const handleDelete = async () => {
         const token = localStorage.getItem('token')
+       try {
         const response = await api.delete(`/despesas/${id}`,
             {
                 headers: {
@@ -16,12 +19,11 @@ function ModalDeleteExpense({handleClose, show, id}) {
                 }
             }
         )
-        if(response) {
             setLoad(!load)
             toast.succes("Registro excluído com sucesso");
             handleClose()
             return
-        } else {
+        } catch {
             toast.error("Não foi possível excluir o registro")
             handleClose()
             return

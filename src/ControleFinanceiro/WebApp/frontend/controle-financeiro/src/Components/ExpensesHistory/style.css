@@ -9,4 +9,21 @@
     justify-content: flex-start;
     gap: 3rem;
     padding: 2rem;
+    overflow-y: auto;
+    
+}
+::-webkit-scrollbar {
+    width: 5px;
+    position: fixed;
+    right: 0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--cinza-secundario);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius:4px;
+
 }

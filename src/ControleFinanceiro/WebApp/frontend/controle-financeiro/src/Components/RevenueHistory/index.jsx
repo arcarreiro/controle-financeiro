@@ -4,6 +4,7 @@ import RevenueItem from "../RevenueItem";
 import { DateContext } from "../../Context/DateContext";
 import { api } from "../../api/api";
 import ModalDeleteRevenue from "../ModalDeleteRevenue";
+import ModalEditRevenue from "../ModalEditRevenue";
 
 export default function RevenueHistory() {
     const { selectedMonthData, load } = useContext(DateContext);
@@ -11,9 +12,13 @@ export default function RevenueHistory() {
     const [showDelete, setShowDelete] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [modalIndex, setModalIndex] = useState(0);
+    const [modalItem, setModalItem] = useState(null);
+
 
     const handleClose = () => {
         setShowDelete(false);
+        setShowEdit(false);
+        setModalItem(null)
     }
 
     const handleShowDelete = (id) => {
@@ -21,10 +26,16 @@ export default function RevenueHistory() {
         handleClose()
         setShowDelete(true)
     }
-    const handleShowEdit = () => {
-        handleClose()
-        setShowEdit(true)
+
+    const handleModalItem = (id) => {
+        setModalItem(id)
     }
+
+    useEffect(() => {
+        if (modalItem !== null){
+            setShowEdit(true);
+        }
+    }, [modalItem])
 
 
     const getReceitas = async () => {
@@ -54,11 +65,13 @@ export default function RevenueHistory() {
             {receitas.map((item, index) => {
                 return (<div style={{width: "100%", height: "4rem"}} key={index}>
                     <RevenueItem data={item.data} valor={item.valor} descricao={item.descricao} fonte={item.fonte}
-                    handleShowDelete={handleShowDelete} handleShowEdit={handleShowEdit}/>
+                    handleShowDelete={() => {handleShowDelete(item.id)}} handleShowEdit={() => {handleModalItem(item.id)}}/>
+                    
                 </div>
                 )
             })}
             <ModalDeleteRevenue handleClose={handleClose} id={modalIndex} show={showDelete}/>
+            <ModalEditRevenue revenue={modalItem} handleClose={handleClose} show={showEdit} />
         </div>
     </>);
 }
