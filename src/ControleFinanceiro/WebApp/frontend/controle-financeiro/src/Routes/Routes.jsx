@@ -17,7 +17,7 @@ function Routes() {
                 </Route>
                 <div className="globalDiv">
                     <Sidebar />
-                    <ProtectedRoute exact path="/login" component={Login} />
+                    <Route exact path="/login" component={Login} />
                     <ProtectedRoute exact path="/home" component={Home} />
                 </div>
             </Switch>

@@ -14,18 +14,21 @@ import "./Global.css";
 import { AuthProvider } from './Context/AuthContext';
 import Routes from './Routes/Routes';
 import ToastifyAlert from './Components/ToastifyAlert';
+import { DateProvider } from './Context/DateContext';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-    <AuthProvider>
-      <ToastifyAlert/>
-     <ThemeContextProvider>
-      <Routes/>
-     </ThemeContextProvider>
-    </AuthProvider>
+      <AuthProvider>
+        <ToastifyAlert />
+        <ThemeContextProvider>
+          <DateProvider>
+            <Routes />
+          </DateProvider>
+        </ThemeContextProvider>
+      </AuthProvider>
     </>
   )
 }

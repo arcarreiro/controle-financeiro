@@ -41,6 +41,7 @@ hr {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  gap: 2rem;
 }
 
 .sidebar-nav-item {

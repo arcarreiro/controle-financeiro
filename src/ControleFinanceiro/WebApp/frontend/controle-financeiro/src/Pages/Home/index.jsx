@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './home.css';
 import PageContainer from "../../Components/PageContainer";
 import RevenueTotal from "../../Components/RevenueTotal";
@@ -8,13 +8,12 @@ import ExpensesHistory from "../../Components/ExpensesHistory";
 
 export default function Home() {
 
-
     return (<>
         <PageContainer>
             <div className="global">
                 <div className='revenue'>
                     <div className="monthTotal">
-                        <RevenueTotal/>
+                        <RevenueTotal />
                     </div>
                     <div className="revenueHistory">
                         <RevenueHistory/>

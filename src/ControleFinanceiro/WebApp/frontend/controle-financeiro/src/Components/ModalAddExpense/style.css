@@ -1,0 +1,13 @@
+.react-datepicker-ignore-onclickoutside {
+   background-color: var(--background-color);
+   color: var(--font-color);
+}
+
+.react-datepicker-wrapper {
+    background-color: var(--background-color);
+   color: var(--font-color);
+}
+.react-datepicker__input-container {
+    background-color: var(--background-color);
+   color: var(--font-color);
+}

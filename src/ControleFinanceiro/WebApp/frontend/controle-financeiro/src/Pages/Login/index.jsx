@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import './login.css'
 import PageContainer from "../../Components/PageContainer";
 import { Form, InputGroup } from "react-bootstrap";
@@ -11,7 +11,6 @@ import ButtonComponent from "../../Components/ButtonComponent";
 import { ThemeContext } from "../../Context/ThemeContext";
 import { toast } from "react-toastify";
 import { api } from "../../api/api";
-import axios from "axios";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -21,10 +20,6 @@ export default function Login() {
     const history = useHistory();
     const { login } = useAuth();
 
-
-    const handleTest = () => {
-        toast.warning("Funciona");
-    }
 
     const handleLogin = async (e) => {
 
@@ -42,10 +37,10 @@ export default function Login() {
             if (response.status >= 200 && response.status < 300) {
                 const data = await response.data;
 
-                localStorage.setItem("email", data.token.email)
-                localStorage.setItem("token", data.token.token)
-                localStorage.setItem("userId", data.token.usuarioId)
-                localStorage.setItem("name", data.token.nome)
+                localStorage.setItem("email", data.email)
+                localStorage.setItem("token", data.token)
+                localStorage.setItem("userId", data.userId)
+                localStorage.setItem("name", data.name)
 
 
                 login()

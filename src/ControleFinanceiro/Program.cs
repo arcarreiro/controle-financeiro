@@ -5,6 +5,7 @@ using ControleFinanceiro.Core.ValueObjects;
 using ControleFinanceiro.Infrastructure.Configurations;
 using ControleFinanceiro.Infrastructure.Data;
 using ControleFinanceiro.Infrastructure.Mappings;
+using ControleFinanceiro.Infrastructure.Security;
 using Dapper.FluentMap;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -24,13 +25,14 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Minha API", Version = "v1" });
 
     // Configuração de segurança para JWT
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
-        In = ParameterLocation.Header,
-        Description = "Insira o token JWT no formato: Bearer {seuTokenAqui}",
         Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Insira o token JWT no formato: Bearer {seuTokenAqui}",
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -64,29 +66,22 @@ builder.Services.AddSingleton<IDespesaRepository, DespesaRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("Jwt"));
-builder.Services.AddAuthentication(options =>
+builder.Services.AddAuthentication(x =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
 {
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    var jwtConfig = builder.Configuration.GetSection("Jwt").Get<JwtConfig>();
-
-    options.TokenValidationParameters = new TokenValidationParameters
+    x.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = false,
-        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtConfig.Issuer,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
-        ClockSkew = TimeSpan.Zero
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfig.Key)),
+        ValidateIssuer = false
     };
 });
+
+builder.Services.AddTransient<JwtService>();
 
 builder.Services.AddAuthorization();
 
@@ -113,12 +108,15 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseAuthentication();
-    app.UseAuthorization();
+
 }
 
-app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+    
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
 

@@ -2,8 +2,6 @@
 {
     public class JwtConfig
     {
-        public string Key { get; set; } = string.Empty;
-        public string Issuer { get; set; } = string.Empty;
-        public int ExpireDays { get; set; }
+        public static string Key { get; set; } = "5ff5596ab8cd4adaaeba4073e6debcb8";
     }
 }

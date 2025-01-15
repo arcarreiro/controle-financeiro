@@ -43,6 +43,10 @@ export function ThemeContextProvider({ children }) {
                 "--button-color",
                 "var(--verde-primario)"
             );
+            document.documentElement.style.setProperty(
+                "--cancel-button-color",
+                "var(--cinza-secundario)"
+            );
         } else {
             document.documentElement.style.setProperty(
                 "--font-color",
@@ -66,6 +70,10 @@ export function ThemeContextProvider({ children }) {
             );
             document.documentElement.style.setProperty(
                 "--button-color",
+                "var(--preto-primario)"
+            );
+            document.documentElement.style.setProperty(
+                "--cancel-button-color",
                 "var(--preto-primario)"
             );
         }

@@ -8,15 +8,17 @@ using ControleFinanceiro.Infrastructure.Configurations;
 using ControleFinanceiro.Core.Interfaces;
 using ControleFinanceiro.Core.Utils;
 using ControleFinanceiro.Application.DTOs;
+using ControleFinanceiro.Core.Entities;
+using ControleFinanceiro.Infrastructure.Security;
 
 public class AuthService : IAuthService
 {
-    private readonly JwtConfig _jwtConfig;
+    private readonly JwtService _jwtService;
     private readonly IUsuarioRepository _usuarioRepository;
 
-    public AuthService(IOptions<JwtConfig> jwtConfig, IUsuarioRepository usuarioRepository)
+    public AuthService(IUsuarioRepository usuarioRepository, JwtService jwtService)
     {
-        _jwtConfig = jwtConfig.Value;
+        _jwtService = jwtService;
         _usuarioRepository = usuarioRepository;
     }
 
@@ -26,28 +28,7 @@ public class AuthService : IAuthService
         if (usuario == null)
             throw new UnauthorizedAccessException("Usuário não encontrado.");
 
-
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
-            new Claim(ClaimTypes.Email, usuario.Email.Endereco),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(), ClaimValueTypes.DateTime)
-
-        };
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfig.Key));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var token = new JwtSecurityToken(
-            issuer: _jwtConfig.Issuer,
-            audience: null,
-            claims: claims,
-            expires: DateTime.Now.AddDays(_jwtConfig.ExpireDays),
-            signingCredentials: creds
-        );
-
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+        var tokenString = _jwtService.GenerateToken(usuario);
         
         return new AuthResultDTO
         {
@@ -56,7 +37,6 @@ public class AuthService : IAuthService
             Nome = usuario.Nome,
             Email = usuario.Email.Endereco
         };
-
     }
 
     public async Task<bool> ValidateUserCredentials(string email, string senha)

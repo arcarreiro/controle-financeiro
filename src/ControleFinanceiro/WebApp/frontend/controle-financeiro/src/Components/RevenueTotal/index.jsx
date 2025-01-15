@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./style.css";
 import { api } from "../../api/api";
 import { MonthInput, MonthPicker } from "react-lite-month-picker";
+import { DateContext } from "../../Context/DateContext";
 
 export default function RevenueTotal() {
+    const { selectedMonthData, setSelectedMonthData, load } = useContext(DateContext);
     const [receita, setReceita] = useState(0);
-    const [selectedMonthData, setSelectedMonthData] = useState({
-        month: new Date().getMonth() + 1,
-        year: new Date().getFullYear()
-    })
     const [isPickerOpen, setIsPickerOpen] = useState(false);
 
 
@@ -19,7 +17,7 @@ export default function RevenueTotal() {
         const usuario = localStorage.getItem('userId')
         const token = localStorage.getItem('token')
 
-        const response = await api.get(`/receitas/mes/${ano}/${mes}/usuario/${usuario}`, 
+        const response = await api.get(`/receitas/mes/${ano}/${mes}/usuario/${usuario}`,
             {
                 headers: {
                 "Authorization": `Bearer ${token}`
@@ -32,13 +30,13 @@ export default function RevenueTotal() {
 
     useEffect(() => {
         getReceita();
-    }, [selectedMonthData])
+    }, [selectedMonthData, load])
 
     return (<>
-        <div className="globalTotal">
+        <div className="globalRevenueTotal">
             <div style={{ display: "flex", flexDirection: "column" }}>
                 <p style={{ fontSize: "24px" }}>Receita do mês</p>
-                <p style={{ fontSize: "40px", fontWeight: "bold" }}>R$ {receita}</p>
+                <p style={{ fontSize: "40px", fontWeight: "bold" }}>R$ {receita.toLocaleString("pt-br", {style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
             </div>
             <div className="monthpicker">
                 <MonthInput
